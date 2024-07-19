@@ -1,0 +1,11 @@
+federation_version: 2
+subgraphs:
+  A:
+    routing_url: http://localhost:4001
+    schema:
+      file: ./one.graphql
+
+  B:
+    routing_url: http://localhost:4002
+    schema:
+      file: ./two.graphql

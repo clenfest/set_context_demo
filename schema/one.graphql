@@ -1,0 +1,33 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/federation/v2.8", import: ["@key", "@context", "@fromContext", "@external"])
+
+type Query {
+  grandParent: GrandParent!
+}
+
+type GrandParent @key(fields: "id") @context(name: "context") {
+  id: ID!
+  parent: Parent!
+  user: User!
+}
+
+type Parent @key(fields: "id") {
+  id: ID!
+  child: Child!
+}
+
+type Child @key(fields: "id") {
+  id: ID!
+  field(
+    a: String
+      @fromContext(
+        field: "$context { user { name } }"
+      )
+  ): String!  
+}
+
+type User @key(fields: "id") {
+  id: ID! 
+  name: String! @external
+}
